@@ -1,51 +1,65 @@
-// color swirl! connect an RGB LED to the PWM pins as indicated
-// in the #defines
-// public domain, enjoy!
+/*OPPOSITE “SPOKES” FADE IN AND OUT
+CONSECUTIVELY TO CREATE THE ILLUSION
+OF COUNTER-CLOCKWISE ROTATION.
+ANIMATION IS SLOW AND SUBTLE.
 
-#define REDPIN 5
-#define GREENPIN 6
-#define BLUEPIN 3
+Connect opposite pairs of spokes on both wheels to defined PWM pins on Arduino
+*/
+
+#define ASPOKE 3
+#define BSPOKE 5
+#define CSPOKE 6
+#define DSPOKE 9
 
 #define FADESPEED 5     // make this higher to slow down
 
 void setup() {
-  pinMode(REDPIN, OUTPUT);
-  pinMode(GREENPIN, OUTPUT);
-  pinMode(BLUEPIN, OUTPUT);
+  pinMode(ASPOKE, OUTPUT);
+  pinMode(BSPOKE, OUTPUT);
+  pinMode(CSPOKE, OUTPUT);
+  pinMode(DSPOKE, OUTPUT);
 }
 
 
 void loop() {
-  int r, g, b;
+  int b;
 
-  // fade from blue to violet
-  for (r = 0; r < 256; r++) {
-    analogWrite(REDPIN, r);
-    delay(FADESPEED);
-  }
-  // fade from violet to red
-  for (b = 255; b > 0; b--) {
-    analogWrite(BLUEPIN, b);
-    delay(FADESPEED);
-  }
-  // fade from red to yellow
-  for (g = 0; g < 256; g++) {
-    analogWrite(GREENPIN, g);
-    delay(FADESPEED);
-  }
-  // fade from yellow to green
-  for (r = 255; r > 0; r--) {
-    analogWrite(REDPIN, r);
-    delay(FADESPEED);
-  }
-  // fade from green to teal
+  // fade A spoke up
   for (b = 0; b < 256; b++) {
-    analogWrite(BLUEPIN, b);
+    analogWrite(ASPOKE, b);
     delay(FADESPEED);
   }
-  // fade from teal to blue
-  for (g = 255; g > 0; g--) {
-    analogWrite(GREENPIN, g);
+  // fade  A spoke down
+  for (b = 255; b > 0; b--) {
+    analogWrite(ASPOKE, b);
     delay(FADESPEED);
   }
+  for (b = 0; b < 256; b++) {
+    analogWrite(BSPOKE, b);
+    delay(FADESPEED);
+  }
+  // fade  A spoke down
+  for (b = 255; b > 0; b--) {
+    analogWrite(BSPOKE, b);
+    delay(FADESPEED);
+  }
+  for (b = 0; b < 256; b++) {
+    analogWrite(CSPOKE, b);
+    delay(FADESPEED);
+  }
+  // fade  A spoke down
+  for (b = 255; b > 0; b--) {
+    analogWrite(CSPOKE, b);
+    delay(FADESPEED);
+  }
+  for (b = 0; b < 256; b++) {
+    analogWrite(DSPOKE, b);
+    delay(FADESPEED);
+  }
+  // fade  A spoke down
+  for (b = 255; b > 0; b--) {
+    analogWrite(DSPOKE, b);
+    delay(FADESPEED);
+  }
+
 }
