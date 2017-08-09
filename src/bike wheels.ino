@@ -6,60 +6,54 @@ ANIMATION IS SLOW AND SUBTLE.
 Connect opposite pairs of spokes on both wheels to defined PWM pins on Arduino
 */
 
-#define ASPOKE 3
-#define BSPOKE 5
-#define CSPOKE 6
-#define DSPOKE 9
+int Aspoke = 3;
+int Bspoke = 5;
+int Cspoke = 6;
+int Dspoke = 9;
 
-#define FADESPEED 5     // make this higher to slow down
+int brightness = 0;    // how bright the LED is
+int fadeAmount = 1;    // how many points to fade the LED by
 
 void setup() {
-  pinMode(ASPOKE, OUTPUT);
-  pinMode(BSPOKE, OUTPUT);
-  pinMode(CSPOKE, OUTPUT);
-  pinMode(DSPOKE, OUTPUT);
+  pinMode(Aspoke, OUTPUT);
+  pinMode(Bspoke, OUTPUT);
+  pinMode(Cspoke, OUTPUT);
+  pinMode(Dspoke, OUTPUT);
 }
 
 
 void loop() {
-  int b;
+  // set the brightness of pin 11:
+  analogWrite(Aspoke, brightness);
 
-  // fade A spoke up
-  for (b = 0; b < 256; b++) {
-    analogWrite(ASPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(ASPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(BSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(BSPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(CSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(CSPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(DSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(DSPOKE, b);
-    delay(FADESPEED);
-  }
+  // change the brightness for next time through the loop:
+  brightness = brightness + fadeAmount;
 
+  // reverse the direction of the fading at the ends of the fade:
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  // wait for 30 milliseconds to see the dimming effect
+  delay(4);
+
+  analogWrite(Bspoke, brightness);
+  brightness = brightness + fadeAmount;
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  delay(4);
+
+  analogWrite(Cspoke, brightness);
+  brightness = brightness + fadeAmount;
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  delay(4);
+
+  analogWrite(Dspoke, brightness);
+  brightness = brightness + fadeAmount;
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  delay(4);
 }
