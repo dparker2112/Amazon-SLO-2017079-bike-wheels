@@ -6,60 +6,30 @@ ANIMATION IS SLOW AND SUBTLE.
 Connect opposite pairs of spokes on both wheels to defined PWM pins on Arduino
 */
 
-#define ASPOKE 3
-#define BSPOKE 5
-#define CSPOKE 6
-#define DSPOKE 9
+int value, value2, value3, value4 ;
+int ledpin = 3;                           // light connected to digital pin 3
+int ledpin2 = 5;                          // light connected to digital pin 5
+int ledpin3 = 6;                          // light connected to digital pin 6
+int ledpin4 = 9;                          // light connected to digital pin 9
+long time=0;
 
-#define FADESPEED 5     // make this higher to slow down
+int period = 2000;
+int displace = 500;
 
-void setup() {
-  pinMode(ASPOKE, OUTPUT);
-  pinMode(BSPOKE, OUTPUT);
-  pinMode(CSPOKE, OUTPUT);
-  pinMode(DSPOKE, OUTPUT);
+void setup()
+{
+ // nothing for setup
 }
 
-
-void loop() {
-  int b;
-
-  // fade A spoke up
-  for (b = 0; b < 256; b++) {
-    analogWrite(ASPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(ASPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(BSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(BSPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(CSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(CSPOKE, b);
-    delay(FADESPEED);
-  }
-  for (b = 0; b < 256; b++) {
-    analogWrite(DSPOKE, b);
-    delay(FADESPEED);
-  }
-  // fade  A spoke down
-  for (b = 255; b > 0; b--) {
-    analogWrite(DSPOKE, b);
-    delay(FADESPEED);
-  }
-
+void loop()
+{
+ time = millis();
+ value = 128+127*cos(2*PI/period*time);
+ value2 = 128+127*cos(2*PI/period*(displace-time));
+ value3 = 128+127*cos(2*PI/period*((2*displace)-time));
+ value4 = 128+127*cos(2*PI/period*((3*displace)-time));
+ analogWrite(ledpin, value);           // sets the value (range from 0 to 255)
+ analogWrite(ledpin2, value2);         // sets the value (range from 0 to 255)
+ analogWrite(ledpin3, value3);         // sets the value (range from 0 to 255)
+ analogWrite(ledpin4, value4);         // sets the value (range from 0 to 255)
 }
