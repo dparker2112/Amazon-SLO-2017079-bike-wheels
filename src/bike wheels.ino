@@ -13,8 +13,8 @@ int ledpin3 = 6;                          // light connected to digital pin 6
 int ledpin4 = 9;                          // light connected to digital pin 9
 long time=0;
 
-int period = 2000;
-int displace = 500;
+int period = 1000;
+int displace = 200;
 
 void setup()
 {
